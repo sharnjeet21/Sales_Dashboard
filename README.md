@@ -1,74 +1,115 @@
-# 📊 Sales Dashboard
+# Sales Performance Dashboard
 
-> A web-based dashboard that visualizes sales metrics and performance indicators to empower data-driven decision-making for sales teams.
+A full-stack sales analytics dashboard with a glassmorphism UI. Built with React, Node.js/Express, and SQLite — visualizes KPIs, product performance, category breakdowns, and monthly trends through interactive charts and a filterable data table.
 
-🔗 **Live Site:** _[Add live URL if deployed]_
+---
 
-![Sales Dashboard Screenshot](./screenshot.png)
+## UI Showcase
 
-## ✨ Features
+![Dashboard Overview](./assets/img1.png)
 
-- 📈 View sales KPIs: revenue, lead conversions, CAC
-- 📊 Interactive charts powered by Chart.js
-- ⚙️ RESTful API with Express.js
-- 💾 Local storage using SQLite
-- 🌐 Fast and responsive interface (frontend with React.js)
-- 🔐 Secure API design
+![Charts Section](./assets/img2.png)
 
-## 🧰 Tech Stack
+![Sales Table with Filters](./assets/img3.png)
 
-- **Backend:** Node.js, Express.js, SQLite  
-- **Frontend:** React.js, Chart.js  
-- **Version Control:** Git, GitHub
+---
 
-## 🛠️ Backend Installation & Setup
+## Tech Stack
 
-Follow these steps to set up the backend locally:
+| Layer    | Technology                              |
+|----------|-----------------------------------------|
+| Frontend | React 18, Vite, Tailwind CSS, Chart.js  |
+| Backend  | Node.js, Express.js                     |
+| Database | SQLite (`sqlite3` + `sqlite`)           |
 
-### 1. Clone the Repository
+---
+
+## Features
+
+- Glassmorphism UI — frosted glass cards, animated gradient background, ambient orbs
+- KPI cards — total revenue, units sold, average order value, top product
+- 4 interactive charts — top products bar, category doughnut, monthly line, region bar
+- Filterable + sortable sales table with pagination
+- Filters by category, region, and date range with live search
+- Responsive layout for desktop and mobile
+- 6 REST API endpoints with query param support
+
+---
+
+## Project Structure
+
+```
+├── assets/                    # UI screenshots
+├── sales-backend/
+│   ├── server.js              # Express entry point (CORS, logging, error handling)
+│   ├── Routes.js              # All API route handlers
+│   └── sqlite/
+│       ├── initDB.js          # Schema creation + seed data
+│       └── sales.db           # SQLite database
+│
+└── sales-frontend/
+    └── src/
+        ├── App.jsx            # Root layout + orb background
+        ├── index.css          # Glassmorphism styles + animations
+        └── components/
+            ├── Navbar.jsx     # Sticky glass navbar
+            ├── KpiCard.jsx    # KPI summary card
+            └── Sales.jsx      # Main dashboard (charts, tables, filters)
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js v18+
+- npm
+
+### 1. Clone the repo
 
 ```bash
 git clone https://github.com/your-username/sales-dashboard.git
-cd sales-dashboard/backend
+cd sales-dashboard
 ```
 
-### 2. Install Dependencies
+### 2. Backend setup
 
 ```bash
+cd sales-backend
 npm install
+node sqlite/initDB.js   # creates sales.db with schema + seed data
+npm start               # runs on http://localhost:3000
 ```
 
-### 3. Initialize the SQLite Database
+### 3. Frontend setup
+
+Open a new terminal:
 
 ```bash
-node db/init.js
+cd sales-frontend
+npm install
+npm run dev             # runs on http://localhost:5173
 ```
 
-This will generate `sales.db` with required schema and sample data.
+Vite proxies all `/api` requests to `http://localhost:3000` automatically.
 
-### 4. Start the Server
+---
 
-```bash
-npm start
-```
+## API Endpoints
 
-Server will start at [http://localhost:5000](http://localhost:5000)
+| Method | Endpoint                  | Description                                                        |
+|--------|---------------------------|--------------------------------------------------------------------|
+| GET    | `/api/sales-data`         | All sales. Query params: `category`, `region`, `startDate`, `endDate` |
+| GET    | `/api/monthly-sales-data` | Monthly units sold and revenue per product                         |
+| GET    | `/api/summary`            | KPI totals, top product, category and region breakdown             |
+| GET    | `/api/top-products`       | Top N products by revenue. Query param: `limit` (default 5)       |
+| GET    | `/api/categories`         | List of distinct product categories                                |
+| GET    | `/api/regions`            | List of distinct sales regions                                     |
 
-### 5. Available API Endpoints
+---
 
-| Method | Endpoint         | Description                      |
-|--------|------------------|----------------------------------|
-| GET    | `/api/metrics`   | Returns key performance metrics |
-| GET    | `/api/sales`     | Returns sales data for charts   |
-
-## 📄 License
-
-MIT License © Sharnjeet Singh
-
-## 👤 Author
+## Author
 
 **Sharnjeet Singh**  
-[LinkedIn](https://linkedin.com/in/sharnjeetsingh21)  
-[Portfolio](https://your-portfolio.com)
-
-> Empowering smarter sales with insightful dashboards.
+[LinkedIn](https://linkedin.com/in/sharnjeetsingh21)

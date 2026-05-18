@@ -1,20 +1,23 @@
-// App.js
 import React from 'react';
-import SalesTable from './components/Sales';
 import Navbar from './components/Navbar';
-
-
+import SalesTable from './components/Sales';
 
 function App() {
   return (
-    <div className="App">
-      <div>
-        <Navbar/>
+    <div className="bg-mesh min-h-screen">
+      {/* Floating ambient orbs */}
+      <div className="orb orb-1" />
+      <div className="orb orb-2" />
+      <div className="orb orb-3" />
+      <div className="orb orb-4" />
+
+      {/* Content layer */}
+      <div className="relative z-10">
+        <Navbar />
+        <main>
+          <SalesTable />
+        </main>
       </div>
-      <header className="App-header">
-        <SalesTable />
-      
-      </header>
     </div>
   );
 }
