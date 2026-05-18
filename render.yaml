@@ -3,7 +3,7 @@ services:
     name: sales-dashboard
     runtime: node
     rootDir: sales-backend
-    buildCommand: npm install && cd ../sales-frontend && npm install && npm run build
+    buildCommand: npm install && cd ../sales-frontend && npm install --include=dev && npm run build
     startCommand: node sqlite/initDB.js && node server.js
     envVars:
       - key: NODE_ENV
