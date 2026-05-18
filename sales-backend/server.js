@@ -1,6 +1,6 @@
-
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 const router = require('./Routes.js');
 
@@ -15,8 +15,17 @@ app.use((req, res, next) => {
   next();
 });
 
-// Use the routes defined in routes.js
+// API routes
 app.use('/', router);
+
+// Serve React frontend in production
+const frontendDist = path.join(__dirname, '../sales-frontend/dist');
+app.use(express.static(frontendDist));
+
+// Catch-all: send index.html for any non-API route (React Router support)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendDist, 'index.html'));
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {

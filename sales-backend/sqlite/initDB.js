@@ -8,7 +8,17 @@ const initializeDatabase = async () => {
       driver: sqlite3.Database,
     });
 
-    // Drop existing tables to re-seed cleanly
+    // Only drop and re-seed if tables are empty (safe for production restarts)
+    const existing = await db.get(`SELECT COUNT(*) as count FROM sqlite_master WHERE type='table' AND name='Sales'`);
+    if (existing && existing.count > 0) {
+      const rows = await db.get(`SELECT COUNT(*) as count FROM Sales`);
+      if (rows && rows.count > 0) {
+        console.log('Database already initialized, skipping seed.');
+        await db.close();
+        return;
+      }
+    }
+
     await db.exec(`DROP TABLE IF EXISTS Sales;`);
     await db.exec(`DROP TABLE IF EXISTS MonthlySales;`);
 
